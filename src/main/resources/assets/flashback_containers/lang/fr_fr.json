@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Conteneurs",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Afficher la souris",
+    "flashback_containers.config.animation": "Animer les objets",
+    "flashback_containers.visuals.mouse.tooltip": "Met en surbrillance l'emplacement sous la souris enregistrée et affiche l'objet tenu par le curseur",
+    "flashback_containers.visuals.animation.tooltip": "Les objets volent entre les emplacements. Si la souris est affichée, seuls les déplacements sans curseur sont animés (Maj+clic, touches numériques)",
+    "flashback_containers.config.tooltips": "Afficher les infobulles des objets",
+    "flashback_containers.config.tooltips.tooltip": "Affiche le nom et la description de l'objet sous la souris enregistrée, comme en jeu. Nécessite « Afficher la souris »"
+}

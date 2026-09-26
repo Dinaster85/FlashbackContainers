@@ -1,0 +1,21 @@
+{
+    "required": true,
+    "package": "me.dinaster85.flashbackcontainers.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "client": [
+        "MixinAbstractContainerScreen",
+        "MixinHud",
+        "MixinInventoryScreen",
+        "MixinMainMenuBar",
+        "MixinRecipeBookComponent",
+        "MixinReplayServer",
+        "MixinReplayUI",
+        "MixinScreen"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "overwrites": {
+        "requireAnnotations": true
+    }
+}

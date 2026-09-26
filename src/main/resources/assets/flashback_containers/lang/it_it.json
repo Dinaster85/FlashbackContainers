@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Contenitori",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Mostra mouse",
+    "flashback_containers.config.animation": "Anima oggetti",
+    "flashback_containers.visuals.mouse.tooltip": "Evidenzia lo slot sotto il mouse registrato e mostra l'oggetto tenuto dal cursore",
+    "flashback_containers.visuals.animation.tooltip": "Gli oggetti volano tra gli slot. Con il mouse visibile, si animano solo gli spostamenti senza cursore (Maiusc+clic, tasti numerici)",
+    "flashback_containers.config.tooltips": "Mostra i tooltip degli oggetti",
+    "flashback_containers.config.tooltips.tooltip": "Mostra il nome e la descrizione dell'oggetto sotto il mouse registrato, come nel gioco. Richiede \"Mostra mouse\""
+}

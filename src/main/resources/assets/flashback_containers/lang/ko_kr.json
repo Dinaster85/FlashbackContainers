@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "컨테이너",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "마우스 표시",
+    "flashback_containers.config.animation": "아이템 애니메이션",
+    "flashback_containers.visuals.mouse.tooltip": "녹화된 마우스 아래의 슬롯을 강조하고 커서에 든 아이템을 표시합니다",
+    "flashback_containers.visuals.animation.tooltip": "아이템이 슬롯 사이를 날아갑니다. 마우스를 표시하면 커서를 거치지 않는 이동(Shift+클릭, 숫자 키)만 애니메이션됩니다",
+    "flashback_containers.config.tooltips": "아이템 툴팁 표시",
+    "flashback_containers.config.tooltips.tooltip": "녹화된 마우스 아래 아이템의 이름과 설명을 게임에서처럼 표시합니다. \"마우스 표시\"가 필요합니다"
+}

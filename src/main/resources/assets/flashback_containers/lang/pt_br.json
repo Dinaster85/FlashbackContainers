@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Contêineres",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Mostrar mouse",
+    "flashback_containers.config.animation": "Animar itens",
+    "flashback_containers.visuals.mouse.tooltip": "Destaca o espaço sob o mouse gravado e mostra o item segurado no cursor",
+    "flashback_containers.visuals.animation.tooltip": "Os itens voam entre os espaços. Com o mouse visível, só os movimentos sem cursor são animados (Shift+clique, teclas numéricas)",
+    "flashback_containers.config.tooltips": "Mostrar dicas dos itens",
+    "flashback_containers.config.tooltips.tooltip": "Mostra o nome e a descrição do item sob o mouse gravado, como no jogo. Requer \"Mostrar mouse\""
+}

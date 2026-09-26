@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "flashback_containers",
+    "version": "${version}",
+    "name": "Flashback Containers",
+    "description": "Records opened containers (chests, furnaces...) into Flashback replays and shows them in first-person playback.",
+    "authors": [
+        "Dinaster85"
+    ],
+    "license": "GPL-3.0-only",
+    "icon": "assets/flashback_containers/icon.png",
+    "environment": "client",
+    "entrypoints": {
+        "client": [
+            "me.dinaster85.flashbackcontainers.FlashbackContainers"
+        ],
+        "modmenu": [
+            "me.dinaster85.flashbackcontainers.ModMenuIntegration"
+        ]
+    },
+    "accessWidener": "flashback_containers.classtweaker",
+    "mixins": [
+        "flashback_containers.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.19.0",
+        "minecraft": "~26.2",
+        "java": ">=25",
+        "fabric-api": "*",
+        "flashback": ">=0.43.0"
+    },
+    "suggests": {
+        "modmenu": "*"
+    }
+}

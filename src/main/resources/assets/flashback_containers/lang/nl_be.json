@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Containers",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Muis tonen",
+    "flashback_containers.config.animation": "Voorwerpen animeren",
+    "flashback_containers.visuals.mouse.tooltip": "Markeert het vak onder de opgenomen muis en toont het voorwerp aan de cursor",
+    "flashback_containers.visuals.animation.tooltip": "Voorwerpen vliegen tussen vakken. Met zichtbare muis worden alleen verplaatsingen zonder cursor geanimeerd (Shift+klik, cijfertoetsen)",
+    "flashback_containers.config.tooltips": "Tooltips van voorwerpen tonen",
+    "flashback_containers.config.tooltips.tooltip": "Toont de naam en beschrijving van het voorwerp onder de opgenomen muis, zoals in het spel. Vereist \"Muis tonen\""
+}

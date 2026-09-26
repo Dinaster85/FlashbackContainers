@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Контейнеры",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Показывать мышь",
+    "flashback_containers.config.animation": "Анимация предметов",
+    "flashback_containers.visuals.mouse.tooltip": "Подсвечивает слот под записанной мышью и показывает предмет на курсоре",
+    "flashback_containers.visuals.animation.tooltip": "Предметы перелетают между слотами. Если мышь показана, летают только перемещения без курсора (шифт-клик, цифры)",
+    "flashback_containers.config.tooltips": "Показывать подсказки предметов",
+    "flashback_containers.config.tooltips.tooltip": "Показывает название и описание предмета под записанной мышью, как в игре. Нужна включённая «Показывать мышь»"
+}

@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Kontajnery",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Zobraziť myš",
+    "flashback_containers.config.animation": "Animácia predmetov",
+    "flashback_containers.visuals.mouse.tooltip": "Zvýrazní slot pod nahranou myšou a zobrazí predmet držaný na kurzore",
+    "flashback_containers.visuals.animation.tooltip": "Predmety preletujú medzi slotmi. Keď je myš zobrazená, lietajú len presuny bez kurzora (Shift+klik, číselné klávesy)",
+    "flashback_containers.config.tooltips": "Zobraziť popisy predmetov",
+    "flashback_containers.config.tooltips.tooltip": "Zobrazí názov a popis predmetu pod nahranou myšou ako v hre. Vyžaduje zapnuté „Zobraziť myš“"
+}

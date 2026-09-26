@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Container",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Maus anzeigen",
+    "flashback_containers.config.animation": "Gegenstände animieren",
+    "flashback_containers.visuals.mouse.tooltip": "Hebt den Slot unter der aufgezeichneten Maus hervor und zeigt den Gegenstand am Mauszeiger",
+    "flashback_containers.visuals.animation.tooltip": "Gegenstände fliegen zwischen Slots. Bei angezeigter Maus fliegen nur Bewegungen ohne Mauszeiger (Umschalt+Klick, Zahlentasten)",
+    "flashback_containers.config.tooltips": "Gegenstands-Tooltips anzeigen",
+    "flashback_containers.config.tooltips.tooltip": "Zeigt Name und Beschreibung des Gegenstands unter der aufgezeichneten Maus, wie im Spiel. Erfordert „Maus anzeigen“"
+}
