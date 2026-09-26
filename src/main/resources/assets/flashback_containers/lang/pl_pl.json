@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Pojemniki",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Pokaż mysz",
+    "flashback_containers.config.animation": "Animacja przedmiotów",
+    "flashback_containers.visuals.mouse.tooltip": "Podświetla slot pod nagraną myszą i pokazuje przedmiot trzymany na kursorze",
+    "flashback_containers.visuals.animation.tooltip": "Przedmioty przelatują między slotami. Gdy mysz jest widoczna, animowane są tylko przeniesienia bez kursora (Shift+klik, klawisze numeryczne)",
+    "flashback_containers.config.tooltips": "Pokazuj opisy przedmiotów",
+    "flashback_containers.config.tooltips.tooltip": "Pokazuje nazwę i opis przedmiotu pod nagraną myszą, jak w grze. Wymaga opcji „Pokaż mysz”"
+}

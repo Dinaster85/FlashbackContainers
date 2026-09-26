@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Kontainer",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Tampilkan mouse",
+    "flashback_containers.config.animation": "Animasikan item",
+    "flashback_containers.visuals.mouse.tooltip": "Menyorot slot di bawah mouse yang direkam dan menampilkan item yang dipegang kursor",
+    "flashback_containers.visuals.animation.tooltip": "Item terbang antar slot. Saat mouse ditampilkan, hanya perpindahan tanpa kursor yang dianimasikan (Shift+klik, tombol angka)",
+    "flashback_containers.config.tooltips": "Tampilkan tooltip item",
+    "flashback_containers.config.tooltips.tooltip": "Menampilkan nama dan deskripsi item di bawah mouse yang direkam, seperti di dalam game. Memerlukan \"Tampilkan mouse\""
+}

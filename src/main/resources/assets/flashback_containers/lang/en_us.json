@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "Containers",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "Show mouse",
+    "flashback_containers.config.animation": "Animate items",
+    "flashback_containers.visuals.mouse.tooltip": "Highlights the slot under the recorded mouse and shows the item held on the cursor",
+    "flashback_containers.visuals.animation.tooltip": "Items fly between slots. With the mouse shown, only moves that do not go through the cursor (shift-click, number keys)",
+    "flashback_containers.config.tooltips": "Show item tooltips",
+    "flashback_containers.config.tooltips.tooltip": "Shows the name and lore of the item under the recorded mouse, like in the game. Needs \"Show mouse\""
+}

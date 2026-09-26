@@ -1,0 +1,10 @@
+{
+    "flashback_containers.window": "容器",
+    "flashback_containers.config.title": "Flashback Containers",
+    "flashback_containers.config.mouse": "显示鼠标",
+    "flashback_containers.config.animation": "物品动画",
+    "flashback_containers.visuals.mouse.tooltip": "高亮录制的鼠标所在的槽位，并显示光标上持有的物品",
+    "flashback_containers.visuals.animation.tooltip": "物品在槽位之间飞行。显示鼠标时，仅对不经过光标的移动播放动画（Shift+点击、数字键）",
+    "flashback_containers.config.tooltips": "显示物品提示框",
+    "flashback_containers.config.tooltips.tooltip": "像游戏中一样显示录制的鼠标下物品的名称和描述。需要开启“显示鼠标”"
+}
