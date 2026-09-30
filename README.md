@@ -61,6 +61,11 @@ replays recorded without it contain no container data.
   person as that player.
 - Not recorded yet: the creative inventory, horse/llama inventories, villager trades, lectern.
 
+## Known issues
+
+- Stonecutter: the grid of possible results is empty. Flashback doesn't record the recipe list the
+  server sends, so the replay doesn't know which recipes the server had.
+
 ## Building
 
 1. Install a JDK 21 or newer to run Gradle (JDK 25 for the mod itself is downloaded by Gradle,

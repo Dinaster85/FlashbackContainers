@@ -53,3 +53,14 @@
 
 ### Notes
 - Replays recorded with 0.3.2 open fine in 0.3.0 and 0.3.1, without the indicators.
+
+
+## 0.3.3 — smithing table hints
+
+### Fixed
+- Smithing table: the hints in empty slots (template, ingot, armor outlines) are shown and cycle
+  like in the game.
+
+### Known issues
+- Stonecutter: the grid of possible results is empty. Flashback doesn't record the recipe list the
+  server sends, so the replay doesn't know which recipes the server had.

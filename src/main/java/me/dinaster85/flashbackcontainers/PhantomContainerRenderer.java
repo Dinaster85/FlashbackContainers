@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
+import net.minecraft.client.gui.screens.inventory.SmithingScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,6 +61,8 @@ public class PhantomContainerRenderer {
     public static void clientTick(Minecraft minecraft) {
         if (Flashback.isInReplay() && minecraft.level != null && minecraft.level.tickRateManager().runsNormally()) {
             ticks++;
+            // the smithing table cycles the hints in its empty slots (ingot outline etc.) here
+            if (screen instanceof SmithingScreen smithing) smithing.containerTick();
         }
 
         // The replay server sets the mouse on its own ticks, which are out of phase with the
