@@ -1,5 +1,6 @@
 package me.dinaster85.flashbackcontainers;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 // Written by the replay server thread, read by the render thread.
@@ -9,8 +10,8 @@ public class PlaybackState {
     // state == null means nothing is open, animatable == false when it came from seeking
     public record Snapshot(ContainerState state, int localPlayerId, long version, boolean animatable) {}
 
-    // jumpId changes when the position must not be smoothed from the previous one (seeking)
-    public record Mouse(float x, float y, long jumpId) {}
+    // mouse points of one tick, jumpId changes when they must not be smoothed from the previous ones (seeking)
+    public record Mouse(List<ActionContainerMouse.Point> points, long jumpId) {}
 
     private static final AtomicLong version = new AtomicLong();
     private static volatile Snapshot current;
@@ -31,9 +32,9 @@ public class PlaybackState {
         current = new Snapshot(state, localPlayerId, version.incrementAndGet(), animatable);
     }
 
-    public static void setMouse(float x, float y, boolean jump) {
+    public static void setMouse(List<ActionContainerMouse.Point> points, boolean jump) {
         if (jump) jumps++;
-        mouse = new Mouse(x, y, jumps);
+        mouse = new Mouse(List.copyOf(points), jumps);
     }
 
     // Flashback rewound to a snapshot, whatever was open is not valid anymore

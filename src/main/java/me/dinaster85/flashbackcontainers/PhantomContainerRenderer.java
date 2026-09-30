@@ -41,8 +41,8 @@ public class PhantomContainerRenderer {
     private static final Set<Identifier> brokenMenuTypes = new HashSet<>();
 
     private static long ticks = 0; // only counts while the replay is playing, used for animations
-    private static PlaybackState.Mouse prevMouse;
-    private static PlaybackState.Mouse currentMouse;
+    private static PlaybackState.Mouse lastMouse;
+    private static List<ActionContainerMouse.Point> mousePath; // mouse during the current tick
 
     private static boolean rendering = false;
     private static boolean mouseShown = false;
@@ -61,18 +61,34 @@ public class PhantomContainerRenderer {
         }
 
         // The replay server sets the mouse on its own ticks, which are out of phase with the
-        // client's partial tick. Taking it here, like entity positions, keeps it from shaking.
+        // client's partial tick. Taking it here, like Flashback does for the player, keeps it from shaking.
         PlaybackState.Mouse latest = PlaybackState.getMouse();
         if (latest == null) {
-            prevMouse = null;
-            currentMouse = null;
-        } else if (currentMouse == null || currentMouse.jumpId() != latest.jumpId()) {
-            prevMouse = latest;
-            currentMouse = latest;
+            mousePath = null;
+        } else if (latest == lastMouse || mousePath == null || lastMouse.jumpId() != latest.jumpId()) {
+            // nothing new this tick, or a seek: stand still at the last point
+            ActionContainerMouse.Point end = latest == lastMouse && mousePath != null ? mousePath.getLast() : latest.points().getLast();
+            mousePath = List.of(end, end);
+        } else if (latest.points().size() == 1) {
+            // replays from 0.2.0 - 0.3.0 have one point per tick
+            mousePath = List.of(mousePath.getLast(), latest.points().getFirst());
+        } else if (Flashback.getConfig().advanced.disableIncreasedFirstPersonUpdates) {
+            mousePath = List.of(latest.points().getFirst(), latest.points().getLast());
         } else {
-            prevMouse = currentMouse;
-            currentMouse = latest;
+            mousePath = latest.points();
         }
+        lastMouse = latest;
+    }
+
+    private static ActionContainerMouse.Point mouseAt(float partialTick) {
+        float amount = partialTick * (mousePath.size() - 1);
+        int index = Math.min((int) amount, mousePath.size() - 1);
+        ActionContainerMouse.Point from = mousePath.get(index);
+        if (index + 1 >= mousePath.size()) return from;
+
+        ActionContainerMouse.Point to = mousePath.get(index + 1);
+        float t = amount - index;
+        return new ActionContainerMouse.Point(from.x() + (to.x() - from.x()) * t, from.y() + (to.y() - from.y()) * t);
     }
 
     // called at the end of Hud#extractHotbarAndDecorations, so only when the hotbar is shown
@@ -127,12 +143,11 @@ public class PhantomContainerRenderer {
 
             int mouseX = NO_MOUSE;
             int mouseY = NO_MOUSE;
-            PlaybackState.Mouse prev = prevMouse;
-            PlaybackState.Mouse current = currentMouse;
-            mouseShown = config.showMouse && prev != null && current != null;
+            mouseShown = config.showMouse && mousePath != null;
             if (mouseShown) {
-                mouseX = screen.leftPos + Math.round(prev.x() + (current.x() - prev.x()) * partialTick);
-                mouseY = screen.topPos + Math.round(prev.y() + (current.y() - prev.y()) * partialTick);
+                ActionContainerMouse.Point mouse = mouseAt(partialTick);
+                mouseX = screen.leftPos + Math.round(mouse.x());
+                mouseY = screen.topPos + Math.round(mouse.y());
             }
 
             screen.extractBackground(graphics, mouseX, mouseY, 0);

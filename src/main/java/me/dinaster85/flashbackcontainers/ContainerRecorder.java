@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ContainerRecorder {
 
@@ -25,6 +27,9 @@ public class ContainerRecorder {
     private static ContainerState lastWritten;
     private static boolean wroteAnything = false;
     private static int ticksSinceWrite = 0;
+
+    private static final TreeMap<Float, ActionContainerMouse.Point> frameMouse = new TreeMap<>(); // partial tick -> mouse
+    private static ActionContainerMouse.Point lastTickMouse;
 
     public static void tick(Minecraft minecraft) {
         Recorder recorder = Flashback.RECORDER;
@@ -56,8 +61,22 @@ public class ContainerRecorder {
             ticksSinceWrite = 0;
         }
 
-        // every tick, even if the mouse did not move: playback smooths between the last two
-        if (now != null && screen != null) writeMouse(minecraft, recorder, screen);
+        // every tick, even if the mouse did not move: playback smooths between the points
+        if (now != null && screen != null) {
+            writeMouse(recorder, mousePosition(minecraft, screen));
+        } else {
+            frameMouse.clear();
+            lastTickMouse = null;
+        }
+    }
+
+    // called every frame, remembers where the mouse was at which moment of the tick
+    public static void trackFrame(Minecraft minecraft, float partialTick) {
+        Recorder recorder = Flashback.RECORDER;
+        if (recorder == null || Flashback.isInReplay() || minecraft.player == null || !recorder.readyToWrite()) return;
+
+        AbstractContainerScreen<?> screen = findScreen(minecraft);
+        if (screen != null) frameMouse.put(partialTick, mousePosition(minecraft, screen));
     }
 
     private static void write(Recorder recorder, ContainerState state) {
@@ -68,14 +87,51 @@ public class ContainerRecorder {
         });
     }
 
-    private static void writeMouse(Minecraft minecraft, Recorder recorder, AbstractContainerScreen<?> screen) {
-        float x = (float) (minecraft.mouseHandler.getScaledXPos(minecraft.getWindow()) - screen.leftPos);
-        float y = (float) (minecraft.mouseHandler.getScaledYPos(minecraft.getWindow()) - screen.topPos);
+    // Same as Flashback does for the player: "local player updates per second" / 20 steps per tick,
+    // each point taken from the frames around it. 20 updates = start and end of the tick only.
+    private static void writeMouse(Recorder recorder, ActionContainerMouse.Point end) {
+        ActionContainerMouse.Point start = lastTickMouse != null ? lastTickMouse : end;
+        int steps = Math.max(1, Flashback.getConfig().recording.localPlayerUpdatesPerSecond / 20);
+
+        List<ActionContainerMouse.Point> points = new ArrayList<>(steps + 1);
+        for (int i = 0; i <= steps; i++) {
+            float time = (float) i / steps;
+
+            float fromTime = 0;
+            ActionContainerMouse.Point from = start;
+            Map.Entry<Float, ActionContainerMouse.Point> before = frameMouse.floorEntry(time);
+            if (before != null) {
+                fromTime = before.getKey();
+                from = before.getValue();
+            }
+
+            float toTime = 1;
+            ActionContainerMouse.Point to = end;
+            Map.Entry<Float, ActionContainerMouse.Point> after = frameMouse.ceilingEntry(Math.nextUp(time));
+            if (after != null) {
+                toTime = after.getKey();
+                to = after.getValue();
+            }
+
+            float t = toTime > fromTime ? (time - fromTime) / (toTime - fromTime) : 1;
+            t = Math.clamp(t, 0, 1);
+            points.add(new ActionContainerMouse.Point(from.x() + (to.x() - from.x()) * t, from.y() + (to.y() - from.y()) * t));
+        }
+
+        lastTickMouse = end;
+        frameMouse.clear();
+
         recorder.submitCustomTask(writer -> {
             writer.startAction(ActionContainerMouse.INSTANCE);
-            ActionContainerMouse.encode(writer.friendlyByteBuf(), x, y);
+            ActionContainerMouse.encode(writer.friendlyByteBuf(), points);
             writer.finishAction(ActionContainerMouse.INSTANCE);
         });
+    }
+
+    private static ActionContainerMouse.Point mousePosition(Minecraft minecraft, AbstractContainerScreen<?> screen) {
+        float x = (float) (minecraft.mouseHandler.getScaledXPos(minecraft.getWindow()) - screen.leftPos);
+        float y = (float) (minecraft.mouseHandler.getScaledYPos(minecraft.getWindow()) - screen.topPos);
+        return new ActionContainerMouse.Point(x, y);
     }
 
     private static AbstractContainerScreen<?> findScreen(Minecraft minecraft) {

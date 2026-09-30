@@ -31,5 +31,10 @@
     },
     "suggests": {
         "modmenu": "*"
+    },
+    "custom": {
+        "modmenu": {
+            "parent": "flashback"
+        }
     }
 }
