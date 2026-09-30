@@ -15,6 +15,7 @@ public class FlashbackContainers implements ClientModInitializer {
     public void onInitializeClient() {
         ActionRegistry.register(ActionContainerState.INSTANCE);
         ActionRegistry.register(ActionContainerMouse.INSTANCE);
+        ActionRegistry.register(ActionContainerData.INSTANCE);
 
         ContainersConfig.load();
 

@@ -34,3 +34,22 @@
 - Replays recorded with 0.3.0 still work. Replays recorded with 0.3.1 open fine in 0.3.0, but
   without the mouse.
 
+
+## 0.3.2 — indicators fix
+
+### Fixed
+- Progress bars and indicators are now recorded and shown:
+  - furnace, blast furnace and smoker: flame and arrow;
+  - brewing stand: bubbles, arrow and blaze powder fuel;
+  - enchanting table: level costs, enchantment hints and the enchanting text;
+  - anvil: repair cost and "Too Expensive!";
+  - beacon: pyramid level and selected effects;
+  - loom: selected pattern;
+  - crafter: disabled slots and redstone power.
+- Containers from other mods that use the same vanilla mechanism work too.
+- Screens now use the xp level and game mode of the player you are watching instead of the replay
+  viewer: available enchantments are highlighted correctly, and the anvil cost is red only when that
+  player couldn't afford it.
+
+### Notes
+- Replays recorded with 0.3.2 open fine in 0.3.0 and 0.3.1, without the indicators.

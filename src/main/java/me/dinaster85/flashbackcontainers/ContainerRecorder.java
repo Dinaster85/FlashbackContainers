@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -49,16 +50,19 @@ public class ContainerRecorder {
         ContainerState now = capture(minecraft, screen);
         ticksSinceWrite++;
 
-        boolean changed;
-        if (!wroteAnything) changed = true;
-        else if (now == null) changed = lastWritten != null;
-        else changed = !now.sameContents(lastWritten);
+        boolean itemsChanged;
+        if (!wroteAnything) itemsChanged = true;
+        else if (now == null) itemsChanged = lastWritten != null;
+        else itemsChanged = !now.sameItems(lastWritten);
 
-        if (changed || ticksSinceWrite >= HEARTBEAT_TICKS) {
+        if (itemsChanged || ticksSinceWrite >= HEARTBEAT_TICKS) {
             write(recorder, now);
             lastWritten = now;
             wroteAnything = true;
             ticksSinceWrite = 0;
+        } else if (now != null && !Arrays.equals(now.data(), lastWritten.data())) {
+            writeData(recorder, now);
+            lastWritten = now;
         }
 
         // every tick, even if the mouse did not move: playback smooths between the points
@@ -84,6 +88,14 @@ public class ContainerRecorder {
             writer.startAction(ActionContainerState.INSTANCE);
             ContainerState.encode(writer.friendlyByteBuf(), state);
             writer.finishAction(ActionContainerState.INSTANCE);
+        });
+    }
+
+    private static void writeData(Recorder recorder, ContainerState state) {
+        recorder.submitCustomTask(writer -> {
+            writer.startAction(ActionContainerData.INSTANCE);
+            ActionContainerData.encode(writer.friendlyByteBuf(), state.containerId(), state.data());
+            writer.finishAction(ActionContainerData.INSTANCE);
         });
     }
 
@@ -172,6 +184,12 @@ public class ContainerRecorder {
         for (Slot slot : menu.slots) {
             items.add(slot.getItem().copy());
         }
-        return new ContainerState(containerId, typeId, title, List.copyOf(items), menu.getCarried().copy());
+
+        int[] data = new int[menu.dataSlots.size()];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = menu.dataSlots.get(i).get();
+        }
+
+        return new ContainerState(containerId, typeId, title, List.copyOf(items), menu.getCarried().copy(), data);
     }
 }

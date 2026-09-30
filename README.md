@@ -14,6 +14,8 @@ they were moved.
   and every other container with a vanilla-style screen, including your own inventory (E).
 - **Looks exactly like the game.** The addon uses the real vanilla screens, so textures, titles and
   resource packs are the same as when you played.
+- **Progress bars and indicators.** Furnace flame and arrow, brewing stand bubbles, enchantment
+  costs, anvil cost, beacon level and so on.
 - **Recorded mouse.** The slot under the mouse is highlighted and the item held on the cursor
   follows it, smoothly between ticks.
 - **Item animation.** Items fly between slots when they are moved. With the mouse shown, only
@@ -57,8 +59,7 @@ replays recorded without it contain no container data.
 
 - Only the recording player's containers are known. They are shown when the camera is in first
   person as that player.
-- Not recorded yet: the creative inventory, horse/llama inventories, furnace progress and
-  brewing stand bubbles.
+- Not recorded yet: the creative inventory, horse/llama inventories, villager trades, lectern.
 
 ## Building
 

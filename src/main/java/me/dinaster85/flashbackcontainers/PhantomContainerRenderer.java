@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -34,6 +35,7 @@ public class PhantomContainerRenderer {
 
     private static AbstractContainerScreen<?> screen;
     private static ContainerState screenState;
+    private static ContainerState appliedState;
     private static long appliedVersion = -1;
     private static int laidOutWidth = -1;
     private static int laidOutHeight = -1;
@@ -127,6 +129,7 @@ public class PhantomContainerRenderer {
         float partialTick = deltaTracker.getGameTimeDeltaPartialTick(false);
         float now = ticks + partialTick;
 
+        PossessedPlayerData viewerData = PossessedPlayerData.apply(minecraft);
         rendering = true;
         try {
             if (graphics.guiWidth() != laidOutWidth || graphics.guiHeight() != laidOutHeight) {
@@ -136,8 +139,13 @@ public class PhantomContainerRenderer {
             }
 
             if (appliedVersion != snapshot.version()) {
-                boolean animate = config.animateItems && snapshot.animatable() && !newWindow && appliedVersion != -1;
-                updateItems(state, animate, config.showMouse, now);
+                // only the numbers changed (burning furnace): leave the items and flying ones alone
+                if (appliedVersion == -1 || !state.sameItems(appliedState)) {
+                    boolean animate = config.animateItems && snapshot.animatable() && !newWindow && appliedVersion != -1;
+                    updateItems(state, animate, config.showMouse, now);
+                }
+                updateData(state);
+                appliedState = state;
                 appliedVersion = snapshot.version();
             }
 
@@ -170,9 +178,21 @@ public class PhantomContainerRenderer {
             discard();
         }
         finally {
+            if (viewerData != null) viewerData.restore();
             rendering = false;
             mouseShown = false;
         }
+    }
+
+    private static void updateData(ContainerState state) {
+        AbstractContainerMenu menu = screen.getMenu();
+        int count = Math.min(state.data().length, menu.dataSlots.size());
+        for (int i = 0; i < count; i++) {
+            menu.setData(i, state.data()[i]);
+        }
+
+        // the beacon only updates its buttons in containerTick, which a never opened screen doesn't get
+        if (screen instanceof BeaconScreen beacon) beacon.containerTick();
     }
 
     private static void updateItems(ContainerState state, boolean animate, boolean mouseShown, float now) {
@@ -238,6 +258,7 @@ public class PhantomContainerRenderer {
         // no screen.removed(): it was never opened, and removed() would touch the viewer's player
         screen = null;
         screenState = null;
+        appliedState = null;
         appliedVersion = -1;
         laidOutWidth = -1;
         laidOutHeight = -1;

@@ -12,3 +12,6 @@ accessible method net/minecraft/client/gui/screens/Screen extractBackground (Lne
 # Window position: mouse is recorded relative to it, flying items are drawn relative to it
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I
+
+# Numeric fields of a menu: furnace progress, brewing time, enchantment costs, anvil cost...
+accessible field net/minecraft/world/inventory/AbstractContainerMenu dataSlots Ljava/util/List;

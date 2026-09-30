@@ -32,6 +32,13 @@ public class PlaybackState {
         current = new Snapshot(state, localPlayerId, version.incrementAndGet(), animatable);
     }
 
+    public static void setData(int containerId, int[] data, boolean animatable) {
+        Snapshot previous = current;
+        if (previous == null || previous.state() == null || previous.state().containerId() != containerId) return;
+
+        current = new Snapshot(previous.state().withData(data), previous.localPlayerId(), version.incrementAndGet(), animatable);
+    }
+
     public static void setMouse(List<ActionContainerMouse.Point> points, boolean jump) {
         if (jump) jumps++;
         mouse = new Mouse(List.copyOf(points), jumps);
