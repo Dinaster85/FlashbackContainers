@@ -9,6 +9,8 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
+import net.minecraft.client.gui.screens.inventory.MerchantScreen;
+import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.client.gui.screens.inventory.SmithingScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.RemotePlayer;
@@ -198,9 +200,31 @@ public class PhantomContainerRenderer {
         if (screen instanceof BeaconScreen beacon) beacon.containerTick();
     }
 
+    // before the items: the trade slots look up the offers when they change
+    private static void updateTrades(ContainerState state) {
+        MerchantState merchant = state.merchant();
+        if (merchant == null || !(screen.getMenu() instanceof MerchantMenu menu)) return;
+
+        menu.setOffers(merchant.offers().copy());
+        menu.setXp(merchant.xp());
+        menu.setMerchantLevel(merchant.level());
+        menu.setShowProgressBar(merchant.showProgress());
+        menu.setCanRestock(merchant.canRestock());
+
+        // The result slot is recalculated from the offers on every slot change, using this hint.
+        // Without the selected trade, several trades for the same payment would give the wrong one or none.
+        menu.setSelectionHint(merchant.selected());
+
+        if (screen instanceof MerchantScreen merchantScreen) {
+            merchantScreen.shopItem = merchant.selected();
+            merchantScreen.scrollOff = merchant.scroll();
+        }
+    }
+
     private static void updateItems(ContainerState state, boolean animate, boolean mouseShown, float now) {
         AbstractContainerMenu menu = screen.getMenu();
         animator.finishAll(menu);
+        updateTrades(state);
 
         List<ItemStack> oldItems = new ArrayList<>(menu.slots.size());
         for (int i = 0; i < menu.slots.size(); i++) {

@@ -11,7 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 // data = the menu's numeric fields (furnace flame and arrow, brewing time, enchantment costs...)
-public record ContainerState(int containerId, Identifier menuType, Component title, List<ItemStack> items, ItemStack carried, int[] data) {
+// merchant = villager trades, null for everything else
+public record ContainerState(int containerId, Identifier menuType, Component title, List<ItemStack> items, ItemStack carried, int[] data, MerchantState merchant) {
 
     // the E inventory has no MenuType, so it gets its own id
     public static final Identifier PLAYER_INVENTORY = Identifier.fromNamespaceAndPath(FlashbackContainers.MOD_ID, "player_inventory");
@@ -21,7 +22,7 @@ public record ContainerState(int containerId, Identifier menuType, Component tit
     private static final byte OPEN = 1;
 
     public ContainerState withData(int[] data) {
-        return new ContainerState(containerId, menuType, title, items, carried, data);
+        return new ContainerState(containerId, menuType, title, items, carried, data, merchant);
     }
 
     public boolean sameWindow(ContainerState other) {
@@ -32,9 +33,11 @@ public record ContainerState(int containerId, Identifier menuType, Component tit
             && items.size() == other.items.size();
     }
 
+    // items, cursor and trades: everything except the numeric fields
     public boolean sameItems(ContainerState other) {
         if (!sameWindow(other)) return false;
         if (!ItemStack.matches(carried, other.carried)) return false;
+        if (merchant == null ? other.merchant != null : !merchant.same(other.merchant)) return false;
 
         for (int i = 0; i < items.size(); i++) {
             if (!ItemStack.matches(items.get(i), other.items.get(i))) return false;
@@ -64,8 +67,11 @@ public record ContainerState(int containerId, Identifier menuType, Component tit
         }
         ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, state.carried);
 
-        // added in 0.3.2 at the very end: older versions just skip the extra bytes
+        // Added later, always at the very end: older versions just skip the extra bytes.
+        // 0.3.2: numeric fields, 0.4.0: trades
         writeData(buf, state.data);
+        buf.writeBoolean(state.merchant != null);
+        if (state.merchant != null) MerchantState.encode(buf, state.merchant);
     }
 
     public static ContainerState decode(RegistryFriendlyByteBuf buf) {
@@ -88,8 +94,9 @@ public record ContainerState(int containerId, Identifier menuType, Component tit
         ItemStack carried = ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
 
         int[] data = buf.readableBytes() > 0 ? readData(buf) : new int[0];
+        MerchantState merchant = buf.readableBytes() > 0 && buf.readBoolean() ? MerchantState.decode(buf) : null;
 
-        return new ContainerState(containerId, menuType, title, List.copyOf(items), carried, data);
+        return new ContainerState(containerId, menuType, title, List.copyOf(items), carried, data, merchant);
     }
 
     public static void writeData(RegistryFriendlyByteBuf buf, int[] data) {

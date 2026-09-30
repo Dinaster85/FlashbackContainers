@@ -64,3 +64,14 @@
 ### Known issues
 - Stonecutter: the grid of possible results is empty. Flashback doesn't record the recipe list the
   server sends, so the replay doesn't know which recipes the server had.
+
+
+## 0.4.0 — villager trades
+
+### Added
+- Villager and wandering trader screens now show the trades: the list with prices, discounts and
+  sold out trades, the selected trade and its result, the scroll position of the list, the
+  villager's level and experience bar.
+
+### Notes
+- Replays recorded with 0.4.0 open fine in older versions, without the trades.

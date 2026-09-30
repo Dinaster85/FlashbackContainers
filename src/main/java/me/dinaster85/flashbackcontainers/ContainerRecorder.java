@@ -5,6 +5,8 @@ import com.moulberry.flashback.record.Recorder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.inventory.MerchantScreen;
+import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -176,7 +178,15 @@ public class ContainerRecorder {
         if (typeId == null) return null;
 
         Component title = screen != null ? screen.getTitle() : Component.empty();
-        return snapshot(menu, menu.containerId, typeId, title);
+        ContainerState state = snapshot(menu, menu.containerId, typeId, title);
+        if (!(menu instanceof MerchantMenu merchantMenu)) return state;
+
+        // the selected trade and the scroll position only exist on the screen
+        int selected = screen instanceof MerchantScreen merchantScreen ? merchantScreen.shopItem : 0;
+        int scroll = screen instanceof MerchantScreen merchantScreen ? merchantScreen.scrollOff : 0;
+        MerchantState merchant = new MerchantState(merchantMenu.getOffers().copy(), merchantMenu.getTraderXp(), merchantMenu.getTraderLevel(),
+                                                   merchantMenu.showProgressBar(), merchantMenu.canRestock(), selected, scroll);
+        return new ContainerState(state.containerId(), typeId, title, state.items(), state.carried(), state.data(), merchant);
     }
 
     private static ContainerState snapshot(AbstractContainerMenu menu, int containerId, Identifier typeId, Component title) {
@@ -190,6 +200,6 @@ public class ContainerRecorder {
             data[i] = menu.dataSlots.get(i).get();
         }
 
-        return new ContainerState(containerId, typeId, title, List.copyOf(items), menu.getCarried().copy(), data);
+        return new ContainerState(containerId, typeId, title, List.copyOf(items), menu.getCarried().copy(), data, null);
     }
 }

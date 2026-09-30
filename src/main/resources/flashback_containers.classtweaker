@@ -13,5 +13,9 @@ accessible method net/minecraft/client/gui/screens/Screen extractBackground (Lne
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I
 
+# Villager screen: the selected trade and the scroll position of the trade list
+accessible field net/minecraft/client/gui/screens/inventory/MerchantScreen shopItem I
+accessible field net/minecraft/client/gui/screens/inventory/MerchantScreen scrollOff I
+
 # Numeric fields of a menu: furnace progress, brewing time, enchantment costs, anvil cost...
 accessible field net/minecraft/world/inventory/AbstractContainerMenu dataSlots Ljava/util/List;

@@ -59,7 +59,7 @@ replays recorded without it contain no container data.
 
 - Only the recording player's containers are known. They are shown when the camera is in first
   person as that player.
-- Not recorded yet: the creative inventory, horse/llama inventories, villager trades, lectern.
+- Not recorded yet: the creative inventory, horse/llama inventories, lectern.
 
 ## Known issues
 
