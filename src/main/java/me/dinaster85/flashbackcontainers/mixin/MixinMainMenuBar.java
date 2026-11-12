@@ -3,6 +3,7 @@ package me.dinaster85.flashbackcontainers.mixin;
 import com.moulberry.flashback.editor.ui.windows.MainMenuBar;
 import imgui.moulberry90.ImGui;
 import me.dinaster85.flashbackcontainers.ContainersEditorWindow;
+import me.dinaster85.flashbackcontainers.EditorUiGuard;
 import net.minecraft.client.resources.language.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,8 +16,13 @@ public class MixinMainMenuBar {
 
     @Inject(method = "renderInner", at = @At(value = "INVOKE", target = "Limgui/moulberry90/ImGui;separator()V", ordinal = 2), require = 0)
     private static void addMenuItem(CallbackInfo ci) {
-        if (ImGui.menuItem(I18n.get("flashback_containers.window") + "##FlashbackContainers")) {
-            ContainersEditorWindow.toggle();
+        if (EditorUiGuard.isDisabled()) return;
+        try {
+            if (ImGui.menuItem(I18n.get("flashback_containers.window") + "##FlashbackContainers")) {
+                ContainersEditorWindow.toggle();
+            }
+        } catch (LinkageError e) {
+            EditorUiGuard.fail("menu item", e);
         }
     }
 }

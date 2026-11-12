@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(RecipeBookComponent.class)
 public class MixinRecipeBookComponent {
 
-    @Inject(method = "isVisible", at = @At("HEAD"), cancellable = true, require = 0)
+    @Inject(method = "isVisible", at = @At("HEAD"), cancellable = true, require = 1)
     private void keepClosed(CallbackInfoReturnable<Boolean> cir) {
         if (PhantomContainerRenderer.isRendering()) cir.setReturnValue(false);
     }

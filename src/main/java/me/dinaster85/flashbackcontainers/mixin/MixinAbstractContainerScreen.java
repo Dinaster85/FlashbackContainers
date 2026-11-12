@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractContainerScreen.class)
 public class MixinAbstractContainerScreen {
 
-    @Inject(method = "extractTooltip", at = @At("HEAD"), cancellable = true, require = 0)
+    @Inject(method = "extractTooltip", at = @At("HEAD"), cancellable = true, require = 1)
     private void hideTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {
         if (PhantomContainerRenderer.isRendering() && !PhantomContainerRenderer.isTooltipShown()) ci.cancel();
     }

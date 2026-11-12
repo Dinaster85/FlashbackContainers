@@ -169,9 +169,12 @@ public class PhantomContainerRenderer {
             if (!animator.isEmpty()) {
                 graphics.nextStratum();
                 graphics.pose().pushMatrix();
-                graphics.pose().translate(screen.leftPos, screen.topPos);
-                animator.extract(graphics, minecraft.font, screen.getMenu(), now);
-                graphics.pose().popMatrix();
+                try {
+                    graphics.pose().translate(screen.leftPos, screen.topPos);
+                    animator.extract(graphics, minecraft.font, screen.getMenu(), now);
+                } finally {
+                    graphics.pose().popMatrix();
+                }
             }
 
             // vanilla draws the tooltip only for a real open screen

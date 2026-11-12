@@ -75,3 +75,15 @@
 
 ### Notes
 - Replays recorded with 0.4.0 open fine in older versions, without the trades.
+
+
+## 0.4.1 — Minecraft 26.3
+
+### Changed
+- Works on Minecraft 26.2 and 26.3, with Flashback 0.41.1 or newer.
+- Better compatibility with other mods that change the player inventory screen.
+
+### Fixed
+- If a future Flashback update changes something the addon relies on, the game no longer crashes:
+  container recording, or the "Containers" window in the editor, is switched off for the session and
+  the reason is written to the log. Settings stay available in Mod Menu.

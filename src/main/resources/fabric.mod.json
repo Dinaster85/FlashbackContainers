@@ -24,10 +24,10 @@
     ],
     "depends": {
         "fabricloader": ">=0.19.0",
-        "minecraft": "~26.2",
+        "minecraft": ">=26.2 <26.4",
         "java": ">=25",
         "fabric-api": "*",
-        "flashback": ">=0.43.0"
+        "flashback": ">=0.41.1"
     },
     "suggests": {
         "modmenu": "*"

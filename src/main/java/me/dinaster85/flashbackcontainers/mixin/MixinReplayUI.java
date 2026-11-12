@@ -2,6 +2,7 @@ package me.dinaster85.flashbackcontainers.mixin;
 
 import com.moulberry.flashback.editor.ui.ReplayUI;
 import me.dinaster85.flashbackcontainers.ContainersEditorWindow;
+import me.dinaster85.flashbackcontainers.EditorUiGuard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +17,12 @@ public class MixinReplayUI {
         require = 0
     )
     private static void renderWindow(CallbackInfo ci) {
-        ContainersEditorWindow.render();
+        if (EditorUiGuard.isDisabled()) return;
+        try {
+            // also catches the class init, it creates an ImBoolean
+            ContainersEditorWindow.render();
+        } catch (LinkageError e) {
+            EditorUiGuard.fail("editor window", e);
+        }
     }
 }

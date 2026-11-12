@@ -11,6 +11,13 @@ base {
 
 loom {
     accessWidenerPath = file("src/main/resources/flashback_containers.classtweaker")
+
+    runs {
+        client {
+            // logs a warning for every require = 0 injector that matched nothing
+            vmArg "-Dmixin.debug.countInjections=true"
+        }
+    }
 }
 
 repositories {

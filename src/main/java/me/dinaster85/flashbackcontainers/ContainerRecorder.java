@@ -1,8 +1,12 @@
 package me.dinaster85.flashbackcontainers;
 
 import com.moulberry.flashback.Flashback;
+import com.moulberry.flashback.action.Action;
 import com.moulberry.flashback.record.Recorder;
+import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
@@ -20,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 
 public class ContainerRecorder {
 
@@ -34,7 +39,35 @@ public class ContainerRecorder {
     private static final TreeMap<Float, ActionContainerMouse.Point> frameMouse = new TreeMap<>(); // partial tick -> mouse
     private static ActionContainerMouse.Point lastTickMouse;
 
+    // set on the first error, also from Flashback's writer thread
+    private static volatile boolean disabled = false;
+
     public static void tick(Minecraft minecraft) {
+        if (disabled) return;
+        try {
+            tickInner(minecraft);
+        } catch (RuntimeException | LinkageError e) {
+            disable(e);
+        }
+    }
+
+    // called every frame, remembers where the mouse was at which moment of the tick
+    public static void trackFrame(Minecraft minecraft, float partialTick) {
+        if (disabled) return;
+        try {
+            trackFrameInner(minecraft, partialTick);
+        } catch (RuntimeException | LinkageError e) {
+            disable(e);
+        }
+    }
+
+    private static synchronized void disable(Throwable e) {
+        if (disabled) return;
+        disabled = true;
+        FlashbackContainers.LOGGER.error("Failed to record containers, disabling it for this session", e);
+    }
+
+    private static void tickInner(Minecraft minecraft) {
         Recorder recorder = Flashback.RECORDER;
         if (recorder == null || Flashback.isInReplay() || minecraft.player == null) {
             lastRecorder = null;
@@ -58,26 +91,25 @@ public class ContainerRecorder {
         else itemsChanged = !now.sameItems(lastWritten);
 
         if (itemsChanged || ticksSinceWrite >= HEARTBEAT_TICKS) {
-            write(recorder, now);
+            submit(minecraft, recorder, ActionContainerState.INSTANCE, buf -> ContainerState.encode(buf, now));
             lastWritten = now;
             wroteAnything = true;
             ticksSinceWrite = 0;
         } else if (now != null && !Arrays.equals(now.data(), lastWritten.data())) {
-            writeData(recorder, now);
+            submit(minecraft, recorder, ActionContainerData.INSTANCE, buf -> ActionContainerData.encode(buf, now.containerId(), now.data()));
             lastWritten = now;
         }
 
         // every tick, even if the mouse did not move: playback smooths between the points
         if (now != null && screen != null) {
-            writeMouse(recorder, mousePosition(minecraft, screen));
+            writeMouse(minecraft, recorder, mousePosition(minecraft, screen));
         } else {
             frameMouse.clear();
             lastTickMouse = null;
         }
     }
 
-    // called every frame, remembers where the mouse was at which moment of the tick
-    public static void trackFrame(Minecraft minecraft, float partialTick) {
+    private static void trackFrameInner(Minecraft minecraft, float partialTick) {
         Recorder recorder = Flashback.RECORDER;
         if (recorder == null || Flashback.isInReplay() || minecraft.player == null || !recorder.readyToWrite()) return;
 
@@ -85,25 +117,40 @@ public class ContainerRecorder {
         if (screen != null) frameMouse.put(partialTick, mousePosition(minecraft, screen));
     }
 
-    private static void write(Recorder recorder, ContainerState state) {
-        recorder.submitCustomTask(writer -> {
-            writer.startAction(ActionContainerState.INSTANCE);
-            ContainerState.encode(writer.friendlyByteBuf(), state);
-            writer.finishAction(ActionContainerState.INSTANCE);
-        });
-    }
+    // encoded here, so a failed encode never leaves a half-written action in the replay
+    private static void submit(Minecraft minecraft, Recorder recorder, Action action, Consumer<RegistryFriendlyByteBuf> encoder) {
+        if (disabled) return;
+        byte[] bytes;
+        try {
+            ClientPacketListener connection = minecraft.getConnection();
+            if (connection == null) return;
+            RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), connection.registryAccess());
+            try {
+                encoder.accept(buf);
+                bytes = new byte[buf.readableBytes()];
+                buf.readBytes(bytes);
+            } finally {
+                buf.release();
+            }
+        } catch (RuntimeException | LinkageError e) {
+            disable(e);
+            return;
+        }
 
-    private static void writeData(Recorder recorder, ContainerState state) {
         recorder.submitCustomTask(writer -> {
-            writer.startAction(ActionContainerData.INSTANCE);
-            ActionContainerData.encode(writer.friendlyByteBuf(), state.containerId(), state.data());
-            writer.finishAction(ActionContainerData.INSTANCE);
+            try {
+                writer.startAction(action);
+                writer.friendlyByteBuf().writeBytes(bytes);
+                writer.finishAction(action);
+            } catch (RuntimeException | LinkageError e) {
+                disable(e);
+            }
         });
     }
 
     // Same as Flashback does for the player: "local player updates per second" / 20 steps per tick,
     // each point taken from the frames around it. 20 updates = start and end of the tick only.
-    private static void writeMouse(Recorder recorder, ActionContainerMouse.Point end) {
+    private static void writeMouse(Minecraft minecraft, Recorder recorder, ActionContainerMouse.Point end) {
         ActionContainerMouse.Point start = lastTickMouse != null ? lastTickMouse : end;
         int steps = Math.max(1, Flashback.getConfig().recording.localPlayerUpdatesPerSecond / 20);
 
@@ -135,11 +182,7 @@ public class ContainerRecorder {
         lastTickMouse = end;
         frameMouse.clear();
 
-        recorder.submitCustomTask(writer -> {
-            writer.startAction(ActionContainerMouse.INSTANCE);
-            ActionContainerMouse.encode(writer.friendlyByteBuf(), points);
-            writer.finishAction(ActionContainerMouse.INSTANCE);
-        });
+        submit(minecraft, recorder, ActionContainerMouse.INSTANCE, buf -> ActionContainerMouse.encode(buf, points));
     }
 
     private static ActionContainerMouse.Point mousePosition(Minecraft minecraft, AbstractContainerScreen<?> screen) {

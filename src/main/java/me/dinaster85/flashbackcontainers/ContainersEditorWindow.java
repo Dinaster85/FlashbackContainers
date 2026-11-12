@@ -23,21 +23,26 @@ public class ContainersEditorWindow {
         open.set(true);
         ImGui.setNextWindowSize(320, 135, FIRST_USE_EVER);
         boolean changed = false;
-        if (ImGui.begin(I18n.get("flashback_containers.window") + "###FlashbackContainers", open)) {
-            if (checkbox("flashback_containers.config.mouse", "flashback_containers.visuals.mouse.tooltip", config.showMouse)) {
-                config.showMouse = !config.showMouse;
-                changed = true;
+        // end() must run even if something inside throws
+        boolean visible = ImGui.begin(I18n.get("flashback_containers.window") + "###FlashbackContainers", open);
+        try {
+            if (visible) {
+                if (checkbox("flashback_containers.config.mouse", "flashback_containers.visuals.mouse.tooltip", config.showMouse)) {
+                    config.showMouse = !config.showMouse;
+                    changed = true;
+                }
+                if (checkbox("flashback_containers.config.animation", "flashback_containers.visuals.animation.tooltip", config.animateItems)) {
+                    config.animateItems = !config.animateItems;
+                    changed = true;
+                }
+                if (checkbox("flashback_containers.config.tooltips", "flashback_containers.config.tooltips.tooltip", config.showTooltips)) {
+                    config.showTooltips = !config.showTooltips;
+                    changed = true;
+                }
             }
-            if (checkbox("flashback_containers.config.animation", "flashback_containers.visuals.animation.tooltip", config.animateItems)) {
-                config.animateItems = !config.animateItems;
-                changed = true;
-            }
-            if (checkbox("flashback_containers.config.tooltips", "flashback_containers.config.tooltips.tooltip", config.showTooltips)) {
-                config.showTooltips = !config.showTooltips;
-                changed = true;
-            }
+        } finally {
+            ImGui.end();
         }
-        ImGui.end();
 
         if (!open.get()) {
             config.editorWindowOpen = false;

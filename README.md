@@ -46,10 +46,10 @@ They are stored in `config/flashback_containers.json`.
 
 ## Requirements
 
-- Minecraft 26.2
+- Minecraft 26.2 or 26.3
 - Fabric Loader 0.19.3 or newer
 - Fabric API
-- Flashback 0.43.6 (0.43.0 or newer)
+- Flashback 0.41.1 or newer (any build for your Minecraft version)
 - Mod Menu is optional
 
 The addon is client-side only and works on any server. It has to be installed **while recording**,
