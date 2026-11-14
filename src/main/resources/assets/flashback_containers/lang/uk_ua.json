@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Підсвічує слот під записаною мишею та показує предмет на курсорі",
     "flashback_containers.visuals.animation.tooltip": "Предмети перелітають між слотами. Якщо миша показана, літають лише переміщення без курсора (Shift+клік, цифрові клавіші)",
     "flashback_containers.config.tooltips": "Показувати підказки предметів",
-    "flashback_containers.config.tooltips.tooltip": "Показує назву та опис предмета під записаною мишею, як у грі. Потрібне ввімкнене «Показувати мишу»"
+    "flashback_containers.config.tooltips.tooltip": "Показує назву та опис предмета під записаною мишею, як у грі. Потрібне ввімкнене «Показувати мишу»",
+    "flashback_containers.config.hide_other_hud": "Приховувати HUD інших модів",
+    "flashback_containers.config.hide_other_hud.tooltip": "Поки показано записаний контейнер, оверлеї інших модів (Jade, MiniHUD тощо) ховаються, як при відкритому інвентарі або контейнері"
 }

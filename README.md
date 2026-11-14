@@ -22,6 +22,8 @@ they were moved.
   moves that don't go through the cursor fly (shift-click, number keys), the rest is shown by the
   cursor itself.
 - **Item tooltips** (optional): name and lore of the item under the recorded mouse.
+- **Other mods' overlays hide like in game.** While a container is shown, HUD overlays of other
+  mods that hide when a screen is open (Jade, MiniHUD and the like) are hidden too (optional).
 - **Works with seeking, pausing and exporting.** The window follows the timeline and is drawn
   together with the hotbar, so the "Hotbar" option in the editor and "No GUI" in the export
   also hide it.
@@ -35,11 +37,12 @@ they were moved.
   docked as a tab next to the other editor windows.
 - In [Mod Menu](https://modrinth.com/mod/modmenu), if it is installed.
 
-| Setting            | Default | What it does                                                           |
-|--------------------|---------|------------------------------------------------------------------------|
-| Show mouse         | on      | Slot highlight and the item held on the cursor                         |
-| Animate items      | on      | Items fly between slots                                                |
-| Show item tooltips | off     | Tooltip of the item under the mouse (needs "Show mouse")               |
+| Setting              | Default | What it does                                                           |
+|----------------------|---------|------------------------------------------------------------------------|
+| Show mouse           | on      | Slot highlight and the item held on the cursor                         |
+| Animate items        | on      | Items fly between slots                                                |
+| Show item tooltips   | off     | Tooltip of the item under the mouse (needs "Show mouse")               |
+| Hide other mods' HUD | on      | Overlays of other mods (Jade, MiniHUD...) hide while a container is up |
 
 Settings only change how replays are drawn, everything is always recorded.
 They are stored in `config/flashback_containers.json`.
@@ -65,6 +68,8 @@ replays recorded without it contain no container data.
 
 - Stonecutter: the grid of possible results is empty. Flashback doesn't record the recipe list the
   server sends, so the replay doesn't know which recipes the server had.
+- With JEI installed, subtitles in a replay are drawn over JEI's panel next to a container; in game
+  they are under it.
 
 ## Building
 

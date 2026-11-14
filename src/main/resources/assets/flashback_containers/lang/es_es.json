@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Resalta la casilla bajo el ratón grabado y muestra el objeto sostenido en el cursor",
     "flashback_containers.visuals.animation.tooltip": "Los objetos vuelan entre casillas. Con el ratón visible, solo se animan los movimientos sin cursor (Mayús+clic, teclas numéricas)",
     "flashback_containers.config.tooltips": "Mostrar descripciones de objetos",
-    "flashback_containers.config.tooltips.tooltip": "Muestra el nombre y la descripción del objeto bajo el ratón grabado, como en el juego. Requiere «Mostrar ratón»"
+    "flashback_containers.config.tooltips.tooltip": "Muestra el nombre y la descripción del objeto bajo el ratón grabado, como en el juego. Requiere «Mostrar ratón»",
+    "flashback_containers.config.hide_other_hud": "Ocultar el HUD de otros mods",
+    "flashback_containers.config.hide_other_hud.tooltip": "Mientras se muestra un contenedor grabado, las superposiciones de otros mods (Jade, MiniHUD, etc.) se ocultan como si tuvieras abierto el inventario o un contenedor"
 }

@@ -21,7 +21,7 @@ public class ContainersEditorWindow {
         if (!config.editorWindowOpen) return;
 
         open.set(true);
-        ImGui.setNextWindowSize(320, 135, FIRST_USE_EVER);
+        ImGui.setNextWindowSize(320, 160, FIRST_USE_EVER);
         boolean changed = false;
         // end() must run even if something inside throws
         boolean visible = ImGui.begin(I18n.get("flashback_containers.window") + "###FlashbackContainers", open);
@@ -37,6 +37,10 @@ public class ContainersEditorWindow {
                 }
                 if (checkbox("flashback_containers.config.tooltips", "flashback_containers.config.tooltips.tooltip", config.showTooltips)) {
                     config.showTooltips = !config.showTooltips;
+                    changed = true;
+                }
+                if (checkbox("flashback_containers.config.hide_other_hud", "flashback_containers.config.hide_other_hud.tooltip", config.hideOtherHud)) {
+                    config.hideOtherHud = !config.hideOtherHud;
                     changed = true;
                 }
             }

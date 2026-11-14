@@ -179,6 +179,9 @@ public class PhantomContainerRenderer {
 
             // vanilla draws the tooltip only for a real open screen
             if (isTooltipShown()) graphics.extractDeferredElements(mouseX, mouseY, partialTick);
+
+            // only now that the container is on screen, never after an error
+            if (config.hideOtherHud) OtherHudHider.enable();
         }
         catch (Throwable t) {
             FlashbackContainers.LOGGER.error("Failed to draw container {} in replay, disabling it for this session", state.menuType(), t);
@@ -282,6 +285,21 @@ public class PhantomContainerRenderer {
             FlashbackContainers.LOGGER.error("Could not create screen for menu type {}", state.menuType(), t);
         }
         return null;
+    }
+
+    // For JeiWarmup: init() fires Fabric's AFTER_INIT for a container screen, which starts JEI. Same guards as
+    // drawing (no creative swap, recipe book closed). Never opened, drawn or removed(), so nothing else sees it
+    // and the viewer's real inventory is not touched.
+    static void warmUp(Minecraft minecraft) {
+        RemotePlayer owner = new RemotePlayer(minecraft.level, new GameProfile(UUID.randomUUID(), "replay_inventory"));
+        InventoryScreen dummy = new InventoryScreen(owner);
+        boolean wasRendering = rendering;
+        rendering = true;
+        try {
+            dummy.init(minecraft.getWindow().getGuiScaledWidth(), minecraft.getWindow().getGuiScaledHeight());
+        } finally {
+            rendering = wasRendering;
+        }
     }
 
     public static void discard() {

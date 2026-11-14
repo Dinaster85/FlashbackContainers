@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "녹화된 마우스 아래의 슬롯을 강조하고 커서에 든 아이템을 표시합니다",
     "flashback_containers.visuals.animation.tooltip": "아이템이 슬롯 사이를 날아갑니다. 마우스를 표시하면 커서를 거치지 않는 이동(Shift+클릭, 숫자 키)만 애니메이션됩니다",
     "flashback_containers.config.tooltips": "아이템 툴팁 표시",
-    "flashback_containers.config.tooltips.tooltip": "녹화된 마우스 아래 아이템의 이름과 설명을 게임에서처럼 표시합니다. \"마우스 표시\"가 필요합니다"
+    "flashback_containers.config.tooltips.tooltip": "녹화된 마우스 아래 아이템의 이름과 설명을 게임에서처럼 표시합니다. \"마우스 표시\"가 필요합니다",
+    "flashback_containers.config.hide_other_hud": "다른 모드의 HUD 숨기기",
+    "flashback_containers.config.hide_other_hud.tooltip": "기록된 컨테이너가 표시되는 동안 다른 모드(Jade, MiniHUD 등)의 오버레이를 인벤토리나 컨테이너가 열려 있을 때처럼 숨깁니다"
 }

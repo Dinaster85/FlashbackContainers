@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Zvýrazní slot pod nahranou myší a zobrazí předmět držený na kurzoru",
     "flashback_containers.visuals.animation.tooltip": "Předměty přelétají mezi sloty. Když je myš zobrazena, létají jen přesuny bez kurzoru (Shift+klik, číselné klávesy)",
     "flashback_containers.config.tooltips": "Zobrazit popisky předmětů",
-    "flashback_containers.config.tooltips.tooltip": "Zobrazí název a popis předmětu pod nahranou myší jako ve hře. Vyžaduje zapnuté „Zobrazit myš“"
+    "flashback_containers.config.tooltips.tooltip": "Zobrazí název a popis předmětu pod nahranou myší jako ve hře. Vyžaduje zapnuté „Zobrazit myš“",
+    "flashback_containers.config.hide_other_hud": "Skrýt HUD ostatních modů",
+    "flashback_containers.config.hide_other_hud.tooltip": "Dokud je zobrazen nahraný kontejner, překryvy ostatních modů (Jade, MiniHUD apod.) se skryjí jako při otevřeném inventáři nebo kontejneru"
 }

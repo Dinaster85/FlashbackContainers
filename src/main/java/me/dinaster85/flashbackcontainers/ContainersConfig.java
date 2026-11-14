@@ -20,6 +20,7 @@ public class ContainersConfig {
     public boolean showMouse = true;
     public boolean animateItems = true;
     public boolean showTooltips = false;
+    public boolean hideOtherHud = true;
     public boolean editorWindowOpen = false;
 
     public static ContainersConfig get() { return instance; }

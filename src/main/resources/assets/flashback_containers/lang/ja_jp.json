@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "記録されたマウスの下のスロットを強調表示し、カーソルで持っているアイテムを表示します",
     "flashback_containers.visuals.animation.tooltip": "アイテムがスロット間を飛びます。マウス表示時は、カーソルを使わない移動（Shift+クリック、数字キー）のみアニメーションします",
     "flashback_containers.config.tooltips": "アイテムのツールチップを表示",
-    "flashback_containers.config.tooltips.tooltip": "記録されたマウスの下のアイテムの名前と説明をゲーム内と同じように表示します。「マウスを表示」が必要です"
+    "flashback_containers.config.tooltips.tooltip": "記録されたマウスの下のアイテムの名前と説明をゲーム内と同じように表示します。「マウスを表示」が必要です",
+    "flashback_containers.config.hide_other_hud": "他のMODのHUDを隠す",
+    "flashback_containers.config.hide_other_hud.tooltip": "記録されたコンテナの表示中は、他のMOD（Jade、MiniHUDなど）のオーバーレイをインベントリやコンテナを開いているときと同様に隠します"
 }

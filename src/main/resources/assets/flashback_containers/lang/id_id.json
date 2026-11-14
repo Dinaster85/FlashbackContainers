@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Menyorot slot di bawah mouse yang direkam dan menampilkan item yang dipegang kursor",
     "flashback_containers.visuals.animation.tooltip": "Item terbang antar slot. Saat mouse ditampilkan, hanya perpindahan tanpa kursor yang dianimasikan (Shift+klik, tombol angka)",
     "flashback_containers.config.tooltips": "Tampilkan tooltip item",
-    "flashback_containers.config.tooltips.tooltip": "Menampilkan nama dan deskripsi item di bawah mouse yang direkam, seperti di dalam game. Memerlukan \"Tampilkan mouse\""
+    "flashback_containers.config.tooltips.tooltip": "Menampilkan nama dan deskripsi item di bawah mouse yang direkam, seperti di dalam game. Memerlukan \"Tampilkan mouse\"",
+    "flashback_containers.config.hide_other_hud": "Sembunyikan HUD mod lain",
+    "flashback_containers.config.hide_other_hud.tooltip": "Selama kontainer rekaman ditampilkan, overlay dari mod lain (Jade, MiniHUD, dan sejenisnya) disembunyikan seperti saat inventaris atau kontainer dibuka"
 }

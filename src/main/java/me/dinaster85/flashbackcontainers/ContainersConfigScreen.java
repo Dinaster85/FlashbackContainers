@@ -32,8 +32,10 @@ public class ContainersConfigScreen extends Screen {
                   config.animateItems, value -> config.animateItems = value);
         addToggle(x, y + 48, "flashback_containers.config.tooltips", "flashback_containers.config.tooltips.tooltip",
                   config.showTooltips, value -> config.showTooltips = value);
+        addToggle(x, y + 72, "flashback_containers.config.hide_other_hud", "flashback_containers.config.hide_other_hud.tooltip",
+                  config.hideOtherHud, value -> config.hideOtherHud = value);
 
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> onClose()).bounds(x, y + 72, 200, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> onClose()).bounds(x, y + 96, 200, 20).build());
     }
 
     private void addToggle(int x, int y, String name, String tooltip, boolean value, Consumer<Boolean> setter) {

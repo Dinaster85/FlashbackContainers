@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Destaca o espaço sob o mouse gravado e mostra o item segurado no cursor",
     "flashback_containers.visuals.animation.tooltip": "Os itens voam entre os espaços. Com o mouse visível, só os movimentos sem cursor são animados (Shift+clique, teclas numéricas)",
     "flashback_containers.config.tooltips": "Mostrar dicas dos itens",
-    "flashback_containers.config.tooltips.tooltip": "Mostra o nome e a descrição do item sob o mouse gravado, como no jogo. Requer \"Mostrar mouse\""
+    "flashback_containers.config.tooltips.tooltip": "Mostra o nome e a descrição do item sob o mouse gravado, como no jogo. Requer \"Mostrar mouse\"",
+    "flashback_containers.config.hide_other_hud": "Ocultar HUD de outros mods",
+    "flashback_containers.config.hide_other_hud.tooltip": "Enquanto um contêiner gravado é exibido, as sobreposições de outros mods (Jade, MiniHUD etc.) somem como se o inventário ou um contêiner estivesse aberto"
 }

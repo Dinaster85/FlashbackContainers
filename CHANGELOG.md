@@ -87,3 +87,19 @@
 - If a future Flashback update changes something the addon relies on, the game no longer crashes:
   container recording, or the "Containers" window in the editor, is switched off for the session and
   the reason is written to the log. Settings stay available in Mod Menu.
+
+
+## 0.5.0
+
+### Added
+- While a recorded container is shown in a replay, overlays from other mods (Jade, MiniHUD and other mods that hide when a screen is open) are hidden, the same as in game. They come back when the container closes.
+- New option "Hide other mods' HUD" (on by default) in the Containers window of the Flashback editor and in Mod Menu, to keep those overlays visible.
+
+### Thanks
+ - Thanks Cupperum29 for the report.
+
+### Fixed
+- With JEI installed, the first container shown in a replay no longer freezes the game. JEI is now started while the replay is loading, the same way it starts when joining a world.
+
+### Known issues
+- In replays, subtitles are drawn over JEI's panel next to a container; in game they are under it.

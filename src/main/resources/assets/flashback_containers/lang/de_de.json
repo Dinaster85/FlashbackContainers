@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Hebt den Slot unter der aufgezeichneten Maus hervor und zeigt den Gegenstand am Mauszeiger",
     "flashback_containers.visuals.animation.tooltip": "Gegenstände fliegen zwischen Slots. Bei angezeigter Maus fliegen nur Bewegungen ohne Mauszeiger (Umschalt+Klick, Zahlentasten)",
     "flashback_containers.config.tooltips": "Gegenstands-Tooltips anzeigen",
-    "flashback_containers.config.tooltips.tooltip": "Zeigt Name und Beschreibung des Gegenstands unter der aufgezeichneten Maus, wie im Spiel. Erfordert „Maus anzeigen“"
+    "flashback_containers.config.tooltips.tooltip": "Zeigt Name und Beschreibung des Gegenstands unter der aufgezeichneten Maus, wie im Spiel. Erfordert „Maus anzeigen“",
+    "flashback_containers.config.hide_other_hud": "HUD anderer Mods ausblenden",
+    "flashback_containers.config.hide_other_hud.tooltip": "Solange ein aufgezeichneter Container angezeigt wird, verschwinden Overlays anderer Mods (Jade, MiniHUD usw.) wie bei geöffnetem Inventar oder Container"
 }

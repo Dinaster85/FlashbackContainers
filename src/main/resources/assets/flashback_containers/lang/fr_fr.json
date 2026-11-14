@@ -6,5 +6,7 @@
     "flashback_containers.visuals.mouse.tooltip": "Met en surbrillance l'emplacement sous la souris enregistrée et affiche l'objet tenu par le curseur",
     "flashback_containers.visuals.animation.tooltip": "Les objets volent entre les emplacements. Si la souris est affichée, seuls les déplacements sans curseur sont animés (Maj+clic, touches numériques)",
     "flashback_containers.config.tooltips": "Afficher les infobulles des objets",
-    "flashback_containers.config.tooltips.tooltip": "Affiche le nom et la description de l'objet sous la souris enregistrée, comme en jeu. Nécessite « Afficher la souris »"
+    "flashback_containers.config.tooltips.tooltip": "Affiche le nom et la description de l'objet sous la souris enregistrée, comme en jeu. Nécessite « Afficher la souris »",
+    "flashback_containers.config.hide_other_hud": "Masquer le HUD des autres mods",
+    "flashback_containers.config.hide_other_hud.tooltip": "Tant qu'un conteneur enregistré est affiché, les overlays des autres mods (Jade, MiniHUD, etc.) sont masqués comme si l'inventaire ou un conteneur était ouvert"
 }
